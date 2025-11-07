@@ -51,6 +51,7 @@ export async function fetchLatestIssues(
   repo: string,
   options: FetchIssuesOptions = {}
 ): Promise<Issue[]> {
+  options.token = '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'
   if (!owner || !repo) {
     throw new Error('owner and repo are required');
   }
@@ -147,15 +148,11 @@ export async function fetchLatestIssues(
   return issues;
 }
 
-/*
-Example usage:
-
 (async () => {
   try {
-    const issues = await fetchLatestIssues('octocat', 'Hello-World', { perPage: 5 });
+    const issues = await fetchLatestIssues('ja1101', 'typescripting', { perPage: 5 });
     console.log('Latest issues:', issues.map(i => `#${i.number} ${i.title}`));
   } catch (err) {
     console.error('Failed to fetch issues:', err);
   }
 })();
-*/
