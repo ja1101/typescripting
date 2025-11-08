@@ -51,7 +51,7 @@ export async function fetchLatestIssues(
   repo: string,
   options: FetchIssuesOptions = {}
 ): Promise<Issue[]> {
-  options.token = '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'
+  options.token = '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'
   if (!owner || !repo) {
     throw new Error('owner and repo are required');
   }
