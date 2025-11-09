@@ -150,7 +150,7 @@ export async function fetchLatestIssues(
 
 (async () => {
   try {
-    const issues = await fetchLatestIssues('ja1101', 'typescripting', { perPage: 5 });
+    const issues = await fetchLatestIssues('ja1101', 'typescripting', { perPage: '5' });
     console.log('Latest issues:', issues.map(i => `#${i.number} ${i.title}`));
   } catch (err) {
     console.error('Failed to fetch issues:', err);
