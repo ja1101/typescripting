@@ -7,6 +7,11 @@
  *   process.env.GITHUB_TOKEN or process.env.GH_TOKEN.
  * - The GitHub "issues" endpoint returns pull requests as well — by default this function filters them out.
  */
+ 
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 export type IssueState = 'open' | 'closed' | 'all';
 
@@ -51,7 +56,6 @@ export async function fetchLatestIssues(
   repo: string,
   options: FetchIssuesOptions = {}
 ): Promise<Issue[]> {
-  options.token = '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'
   if (!owner || !repo) {
     throw new Error('owner and repo are required');
   }
