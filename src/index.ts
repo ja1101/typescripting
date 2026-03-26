@@ -45,6 +45,92 @@ export interface FetchIssuesOptions {
   timeoutMs?: number; // optional request timeout in ms (only used if AbortController is available)
 }
 
+export interface Repo {
+  name: string;
+  full_name: string;
+  html_url: string;
+}
+
+export interface RepoIssues {
+  repo: string;
+  issues: Issue[];
+}
+
+export interface FetchUserReposOptions {
+  token?: string;
+  perPage?: number;
+  timeoutMs?: number;
+}
+
+/**
+ * Fetches all public repositories for the given GitHub user.
+ */
+async function fetchUserRepos(user: string, options: FetchUserReposOptions = {}): Promise<Repo[]> {
+  const token = options.token ?? (typeof process !== 'undefined' ? (process.env.GITHUB_TOKEN || process.env.GH_TOKEN) : undefined);
+  const perPage = Math.max(1, Math.min(100, options.perPage ?? 100));
+  const repos: Repo[] = [];
+  let page = 1;
+
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+    'User-Agent': 'fetch-latest-issues-script'
+  };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  while (true) {
+    const url = new URL(`https://api.github.com/users/${user}/repos`);
+    url.searchParams.set('per_page', String(perPage));
+    url.searchParams.set('page', String(page));
+
+    const res = await fetch(url.toString(), { method: 'GET', headers });
+
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      throw new Error(`GitHub API error: ${res.status} ${res.statusText}${text ? ' - ' + text : ''}`);
+    }
+
+    const data = await res.json();
+    if (!Array.isArray(data)) break;
+
+    repos.push(...data.map((r: any) => ({ name: r.name, full_name: r.full_name, html_url: r.html_url })));
+
+    if (data.length < perPage) break;
+    page++;
+  }
+
+  return repos;
+}
+
+/**
+ * Fetches open issues for every repository belonging to the given GitHub user.
+ *
+ * @example
+ * const results = await fetchOpenIssuesForAllRepos('ja1101');
+ */
+export async function fetchOpenIssuesForAllRepos(
+  user: string,
+  options: FetchIssuesOptions = {}
+): Promise<RepoIssues[]> {
+  if (!user) throw new Error('user is required');
+
+  const repos = await fetchUserRepos(user, { token: options.token, timeoutMs: options.timeoutMs });
+
+  const results = await Promise.all(
+    repos.map(async (repo) => {
+      try {
+        const issues = await fetchLatestIssues(user, repo.name, { ...options, state: 'open' });
+        return { repo: repo.full_name, issues };
+      } catch {
+        return { repo: repo.full_name, issues: [] };
+      }
+    })
+  );
+
+  return results.filter((r) => r.issues.length > 0);
+}
+
 /**
  * Fetches latest issues for the given owner/repo sorted by creation date (descending).
  *
@@ -154,8 +240,17 @@ export async function fetchLatestIssues(
 
 (async () => {
   try {
-    const issues = await fetchLatestIssues('ja1101', 'typescripting', { perPage: 5 });
-    console.log('Latest issues:', issues.map(i => `#${i.number} ${i.title}`));
+    const results = await fetchOpenIssuesForAllRepos('ja1101');
+    if (results.length === 0) {
+      console.log('No open issues found across all repos for ja1101.');
+    } else {
+      for (const { repo, issues } of results) {
+        console.log(`\n${repo} (${issues.length} open issue${issues.length !== 1 ? 's' : ''}):`);
+        for (const issue of issues) {
+          console.log(`  #${issue.number} ${issue.title}`);
+        }
+      }
+    }
   } catch (err) {
     console.error('Failed to fetch issues:', err);
   }
