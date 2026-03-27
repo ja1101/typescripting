@@ -239,10 +239,19 @@ export async function fetchLatestIssues(
 }
 
 (async () => {
+  const owner = process.argv[2];
+
+  if (!owner) {
+    console.error('Usage: npm run dev <owner>');
+    console.error('       npm start <owner>');
+    console.error('\nExample: npm run dev ja1101');
+    process.exit(1);
+  }
+
   try {
-    const results = await fetchOpenIssuesForAllRepos('ja1101');
+    const results = await fetchOpenIssuesForAllRepos(owner);
     if (results.length === 0) {
-      console.log('No open issues found across all repos for ja1101.');
+      console.log(`No open issues found across all repos for ${owner}.`);
     } else {
       for (const { repo, issues } of results) {
         console.log(`\n${repo} (${issues.length} open issue${issues.length !== 1 ? 's' : ''}):`);

@@ -19,7 +19,7 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo [3/3] Running the application...
-call npm start
+call npm start ja1101
 if %ERRORLEVEL% NEQ 0 (
     echo ERROR: Application exited with code %ERRORLEVEL%.
     exit /b %ERRORLEVEL%
