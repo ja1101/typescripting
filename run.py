@@ -12,13 +12,13 @@ import sys
 def main():
     try:
         print("[1/3] Installing dependencies...")
-        subprocess.run(["npm", "install"], check=True)
+        subprocess.run(["npm", "install"], check=True, shell=True)
 
         print("[2/3] Compiling TypeScript...")
-        subprocess.run(["npm", "run", "build"], check=True)
+        subprocess.run(["npm", "run", "build"], check=True, shell=True)
 
         print("[3/3] Running the application...")
-        subprocess.run(["npm", "start", "ja1101"], check=True)
+        subprocess.run(["npm", "start", "ja1101"], check=True, shell=True)
 
     except subprocess.CalledProcessError as e:
         error_messages = {
