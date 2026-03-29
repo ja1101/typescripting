@@ -244,7 +244,7 @@ export async function fetchLatestIssues(
   if (!owner) {
     console.error('Usage: npm run dev <owner>');
     console.error('       npm start <owner>');
-    console.error('\nExample: npm run dev ja1101');
+    console.error('\nExample: npm start ja1101');
     process.exit(1);
   }
 
