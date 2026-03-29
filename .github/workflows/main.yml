@@ -10,7 +10,12 @@ jobs:
       - uses: actions/setup-node@v4
       - run: npm install --save-dev typescript ts-node @types/node
       - run: npx tsc --noEmit
-      - uses: actions/ai-inference@v2
+  ask-ai:
+    runs-on: ubuntu-latest
+    steps:
+      - name: AI Inference
+        id: ai-response
+        uses: actions/ai-inference@v2
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
             prompt: |
