@@ -24,7 +24,7 @@ def main():
         error_messages = {
             "install": "npm install failed.",
             "build": "TypeScript compilation failed.",
-            "start": "Application exited with code {code}.",
+            "start": "Application failed with code {code}.",
         }
         cmd = e.cmd[1] if len(e.cmd) > 1 else e.cmd[0]
         if cmd == "install":
