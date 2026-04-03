@@ -110,7 +110,7 @@ describe('fetchLatestIssues', () => {
 
     await fetchLatestIssues('owner', 'repo', { perPage: 999, page: -3, token: 'tok' });
 
-    const calledUrl = new URL((globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][0] as string);
+    const calledUrl = new URL((globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0]![0] as string);
     expect(calledUrl.searchParams.get('per_page')).toBe('100');
     expect(calledUrl.searchParams.get('page')).toBe('1');
   });
@@ -126,7 +126,7 @@ describe('fetchLatestIssues', () => {
 
     await fetchLatestIssues('owner', 'repo', { token: 'my-token' });
 
-    const headers = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].headers;
+    const headers = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0]![1].headers;
     expect(headers.Authorization).toBe('Bearer my-token');
     expect(headers.Accept).toBe('application/vnd.github+json');
     expect(headers['User-Agent']).toBe('fetch-latest-issues-script');
