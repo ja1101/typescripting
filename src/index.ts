@@ -3,7 +3,7 @@
  *
  * Notes:
  * - Requires a global `fetch` (browsers and newer Node.js). In Node.js <18, install a fetch polyfill (e.g. node-fetch).
- * - If you provide a token in options.token it will be used. Otherwise the function will look for
+ * - If you provide a token in options.token, it will be used. Otherwise, the function will look for
  *   process.env.GITHUB_TOKEN or process.env.GH_TOKEN.
  * - The GitHub "issues" endpoint returns pull requests as well — by default this function filters them out.
  */
