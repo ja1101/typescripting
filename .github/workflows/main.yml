@@ -1,12 +1,12 @@
 name: Build
 on: [push, pull_request]
-permissions:
-  models: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      - run: npm install --save-dev typescript ts-node @types/node
+      - run: npm install
       - run: npx tsc --noEmit
+      - run: npm test
