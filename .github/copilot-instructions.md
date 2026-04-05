@@ -1,4 +1,4 @@
-# AGENTS.md
+# Copilot Instructions
 
 ## Big Picture
 - `src/index.ts` is both the public library surface and the CLI entrypoint (bottom IIFE).
@@ -28,10 +28,11 @@
   - `npm start -- <owner>`
 - Direct TS execution uses `npm run dev` (`node --import ts-node/esm ...`, Node >= 20.6 for `--import`).
 - Convenience runners `run.cmd` and `run.py` run install/build/start with sample owner `ja1101`.
-- CI currently validates type-check only (`.github/workflows/main.yml` runs `npx tsc --noEmit`).
+- CI validates type-check only (`.github/workflows/main.yml` runs `npx tsc --noEmit`).
 - `npm test` runs the Vitest suite in `src/index.test.ts` (`vitest run`).
 
-## Change Guidance for Agents
+## Change Guidance
 - Keep CLI output format readable and stable: per-repo header + indented `#<number> <title>` lines.
 - If splitting code into new modules, preserve current exported API from `src/index.ts` unless intentionally changing versioned behavior.
 - Prefer small focused edits over broad refactors; this repo is intentionally compact and single-file-centric right now.
+- Add tests in `src/index.test.ts` using Vitest for any new or changed logic.
