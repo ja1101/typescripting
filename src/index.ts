@@ -239,13 +239,15 @@ export async function fetchLatestIssues(
 }
 
 (async () => {
-  const owner = process.argv[2];
+  let owner: string | undefined = process.argv[2];
 
   if (!owner) {
     console.error('Usage: npm run dev <owner>');
     console.error('       npm start <owner>');
     console.error('\nExample: npm start ja1101');
-    process.exit(1);
+    console.error('\nRunning with ja1101');
+    owner = 'ja1101';
+    //process.exit(1);
   }
 
   try {
