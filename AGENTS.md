@@ -28,8 +28,8 @@
   - `npm start -- <owner>`
 - Direct TS execution uses `npm run dev` (`node --import ts-node/esm ...`, Node >= 20.6 for `--import`).
 - Convenience runners `run.cmd` and `run.py` run install/build/start with sample owner `ja1101`.
-- CI currently validates type-check only (`.github/workflows/main.yml` runs `npx tsc --noEmit`); there is no real automated test suite.
-- `npm test` is a placeholder that exits with error; do not treat it as project validation.
+- CI currently validates type-check only (`.github/workflows/main.yml` runs `npx tsc --noEmit`).
+- `npm test` runs the Vitest suite in `src/index.test.ts` (`vitest run`).
 
 ## Change Guidance for Agents
 - Keep CLI output format readable and stable: per-repo header + indented `#<number> <title>` lines.
