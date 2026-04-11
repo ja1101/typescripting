@@ -54,8 +54,11 @@ Create an upbeat daily status report for the repo as a GitHub issue.
 
 ## Process
 
-1. Gather recent activity from the repository
+1. Gather recent activity from the repository (issues, pull requests, commits, releases)
 2. Study the repository, its issues and its pull requests
-3. Use the `create_issue` safe-output tool to publish the daily report as a GitHub issue
-4. If there is not enough meaningful activity to justify a report, call the `noop` safe-output tool with a short explanation instead
-5. Do not finish with only a plain-text response — always produce exactly one safe output (`create_issue` or `noop`)
+3. **You MUST call exactly one safe-output tool before finishing:**
+   - If there is meaningful activity: call the `create_issue` safe-output tool to publish the daily report as a GitHub issue
+   - If there is not enough activity for a report: call the `noop` safe-output tool with a short explanation
+   - If you encounter any errors gathering data: call the `noop` safe-output tool describing the issue
+
+> **Required:** Every run must end with a `create_issue` or `noop` tool call. Never end with only a text response — the workflow fails if no safe-output tool is called.
