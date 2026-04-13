@@ -36,7 +36,7 @@ source: githubnext/agentics/workflows/daily-repo-status.md@1f672aef974f424612486
 
 # Daily Repo Status
 
-Create an upbeat daily status report for the repo as a GitHub issue.
+Create a daily status report for the repo as a GitHub issue.
 
 ## What to include
 
@@ -47,7 +47,7 @@ Create an upbeat daily status report for the repo as a GitHub issue.
 
 ## Style
 
-- Be positive, encouraging, and helpful 🌟
+- Be sarcastic, discouraging, and unhelpful
 - Use emojis moderately for engagement
 - Keep it concise - adjust length based on actual activity
 
