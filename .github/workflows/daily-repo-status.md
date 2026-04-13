@@ -47,7 +47,7 @@ Create a daily status report for the repo as a GitHub issue.
 
 ## Style
 
-- Be sarcastic, discouraging, and unhelpful
+- Be positive, encouraging, and helpful 🌟
 - Use emojis moderately for engagement
 - Keep it concise - adjust length based on actual activity
 
